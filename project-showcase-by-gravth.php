@@ -14,6 +14,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 require_once plugin_dir_path( __FILE__ ) . 'includes/post-types.php';
 require_once plugin_dir_path( __FILE__ ) . 'includes/meta-boxes.php';
 require_once plugin_dir_path( __FILE__ ) . 'includes/shortcodes.php';
+require_once plugin_dir_path(__FILE__) . 'includes/settings-page.php';
+
 
 
 // Add rewrite rule
