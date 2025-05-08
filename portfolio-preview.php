@@ -20,34 +20,10 @@ if ( ! $project_url ) {
 <html>
 <head>
     <title><?php echo esc_html( $project_title ); ?> - Live Preview</title>
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-        }
-        #preview-bar {
-            background: #111;
-            color: #fff;
-            padding: 10px 20px;
-            font-family: sans-serif;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        #preview-frame {
-            width: 100%;
-            height: calc(100% - 50px);
-            border: none;
-        }
-        a.back-link {
-            color: #00baff;
-            text-decoration: none;
-            font-weight: bold;
-        }
-    </style>
+    <link rel="stylesheet" href="<?php echo plugin_dir_url( __FILE__ ) . 'assets/sp-style.css'; ?>?v=<?php echo filemtime( plugin_dir_path( __FILE__ ) . 'assets/sp-style.css' ); ?>">
+
 </head>
-<body>
+<body class="sp-preview">
     <div id="preview-bar">
         <div>You're viewing: <?php echo esc_html( $project_title ); ?></div>
         <div><a href="<?php echo esc_url( home_url( '/portfolio' ) ); ?>" class="back-link">← Back to Portfolio</a></div>
@@ -55,3 +31,4 @@ if ( ! $project_url ) {
     <iframe id="preview-frame" src="<?php echo esc_url( $project_url ); ?>"></iframe>
 </body>
 </html>
+

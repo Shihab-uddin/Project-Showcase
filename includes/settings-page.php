@@ -47,7 +47,7 @@ function sp_render_settings_page() {
             <table class="form-table">
                 <tr>
                     <th scope="row"><label for="title_bg_color">Shortcode: </label></th>
-                    <td>[grvth_showcase], [grvth_showcase category="your-category"]</td>
+                    <td>[grvth_showcase] | Category flter: [grvth_showcase category="your-category"]</td>
                 </tr>
                 <tr>
                     <th scope="row"><label for="title_bg_color">Title Background Color</label></th>

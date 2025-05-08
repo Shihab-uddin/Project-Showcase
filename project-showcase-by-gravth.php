@@ -18,6 +18,27 @@ require_once plugin_dir_path(__FILE__) . 'includes/settings-page.php';
 
 
 
+function sp_enqueue_frontend_scripts() {
+    if ( ! is_admin() && is_singular() && has_shortcode(get_post()->post_content, 'grvth_showcase') ) {
+        wp_enqueue_script(
+            'sp-popup-js',
+            plugin_dir_url(__FILE__) . 'assets/js/sp-popup.js',
+            array(),
+            '1.0',
+            true
+        );
+        wp_enqueue_style(
+            'sp-showcase-style',
+            plugin_dir_url(__FILE__) . 'assets/sp-style.css',
+            [],
+            filemtime(plugin_dir_path(__FILE__) . 'assets/sp-style.css')
+        );
+    }
+}
+add_action( 'wp_enqueue_scripts', 'sp_enqueue_frontend_scripts' );
+
+
+
 // Add rewrite rule
 function sp_add_preview_rewrite() {
     add_rewrite_rule(
