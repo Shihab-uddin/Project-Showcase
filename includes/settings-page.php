@@ -101,6 +101,7 @@ function sp_render_settings_page() {
                     <td>
                         <select name="sp_portfolio_settings[display_mode]">
                             <option value="preview" <?php selected($settings['display_mode'] ?? '', 'preview'); ?>>Live Preview</option>
+                            <option value="live" <?php selected($settings['display_mode'] ?? '', 'live'); ?>>Visit Site</option>
                             <option value="snippet" <?php selected($settings['display_mode'] ?? '', 'snippet'); ?>>Image Snippet</option>
                         </select>
                     </td>

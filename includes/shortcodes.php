@@ -25,6 +25,7 @@ function sp_portfolio_shortcode( $atts ) {
         --sp-snippet-color: {$snippet_color};
         --sp-title-font-size: {$title_font_size}px;
         --sp-btn-font-size: {$button_font_size}px;
+        --sp-grid-layout:{$layout_col};
     ";
 
     // Shortcode attributes
@@ -61,6 +62,8 @@ function sp_portfolio_shortcode( $atts ) {
                 <div class="sp-portfolio-overlay">
                     <?php if ( $display_mode === 'preview' ): ?>
                         <a href="<?php echo esc_url( home_url( '/portfolio-preview/?project_id=' . get_the_ID() ) ); ?>" target="_blank" class="sp-portfolio-button">Live Preview</a>
+                    <?php elseif ( $display_mode === 'live' ): ?>
+                        <a href="<?php echo esc_url( $url ); ?>" target="_blank" class="sp-portfolio-button">Visit site</a>
                     <?php else: ?>
                         <a href="#" class="sp-portfolio-button sp-portfolio-snippet-button" data-img="<?php echo esc_url($thumbnail); ?>">View Snippet</a>
                     <?php endif; ?>
