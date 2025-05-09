@@ -1,10 +1,13 @@
 <?php
-/**
- * Plugin Name: Project Showcase by Gravth
- * Description: A simple portfolio plugin to showcase your projects (live and demo).
- * Version: 1.0.0
- * Author: Gravth
- */
+/*
+Plugin Name: Project Showcase by Gravth
+Description: Display your web projects with live previews, snippets pop up or via visiting the live site in a stylish grid.
+Version: 1.0.0
+Author: Shihab
+Author URI: https://gravth.com/
+License: GPLv2 or later
+Text Domain: project-showcase-by-gravth
+*/
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly
@@ -57,7 +60,7 @@ add_filter( 'query_vars', 'sp_add_query_var' );
 
 function sp_template_redirect() {
     if ( get_query_var( 'sp_portfolio_preview' ) ) {
-        include plugin_dir_path( __FILE__ ) . 'portfolio-preview.php';
+        include plugin_dir_path( __FILE__ ) . 'templates/portfolio-preview.php';
         exit;
     }
 }

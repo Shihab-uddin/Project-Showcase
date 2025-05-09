@@ -32,9 +32,33 @@ add_action('init', 'sp_register_project_taxonomy');
 
 // Register Settings
 function sp_register_settings() {
-    register_setting( 'sp_portfolio_settings_group', 'sp_portfolio_settings' );
+    register_setting(
+    'sp_portfolio_settings_group',
+    'sp_portfolio_settings',
+    array(
+        'sanitize_callback' => 'sp_sanitize_portfolio_settings'
+    )
+);
 }
 add_action( 'admin_init', 'sp_register_settings' );
+
+function sp_sanitize_portfolio_settings( $input ) {
+    $output = array();
+
+    $output['title_bg_color']         = sanitize_hex_color( $input['title_bg_color'] ?? '#000000' );
+    $output['title_text_color']      = sanitize_hex_color( $input['title_text_color'] ?? '#ffffff' );
+    $output['preview_btn_bg_color']  = sanitize_hex_color( $input['preview_btn_bg_color'] ?? '#0073aa' );
+    $output['preview_btn_text_color']= sanitize_hex_color( $input['preview_btn_text_color'] ?? '#ffffff' );
+    $output['snippet_btn_bg_color']  = sanitize_hex_color( $input['snippet_btn_bg_color'] ?? '#333333' );
+    $output['snippet_btn_text_color']= sanitize_hex_color( $input['snippet_btn_text_color'] ?? '#ffffff' );
+    $output['title_font_size']       = absint( $input['title_font_size'] ?? 24 );
+    $output['button_font_size']      = absint( $input['button_font_size'] ?? 16 );
+    $output['layout_columns']        = absint( $input['layout_columns'] ?? 3 );
+    $output['display_mode']          = sanitize_text_field( $input['display_mode'] ?? 'preview' );
+
+    return $output;
+}
+
 
 // Render Settings Page
 function sp_render_settings_page() {

@@ -20,7 +20,7 @@ if ( ! $project_url ) {
 <html>
 <head>
     <title><?php echo esc_html( $project_title ); ?> - Live Preview</title>
-    <link rel="stylesheet" href="<?php echo plugin_dir_url( __FILE__ ) . 'assets/sp-style.css'; ?>?v=<?php echo filemtime( plugin_dir_path( __FILE__ ) . 'assets/sp-style.css' ); ?>">
+    <link rel="stylesheet" href="<?php echo plugin_dir_url( __FILE__ ) . '../assets/sp-style.css'; ?>?v=<?php echo filemtime( plugin_dir_path( __FILE__ ) . '../assets/sp-style.css' ); ?>">
 
 </head>
 <body class="sp-preview">
