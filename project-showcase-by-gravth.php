@@ -21,48 +21,76 @@ require_once plugin_dir_path(__FILE__) . 'includes/settings-page.php';
 
 
 
-function sp_enqueue_frontend_scripts() {
-    if ( ! is_admin() && is_singular() && has_shortcode(get_post()->post_content, 'grvth_showcase') ) {
+function grvthps_enqueue_frontend_scripts() {
+    if ( is_admin() ) {
+        return;
+    }
+
+    global $post;
+    if ( $post && has_shortcode( $post->post_content, 'grvthps_showcase' ) ) {
         wp_enqueue_script(
-            'sp-popup-js',
+            'grvthps-popup-js',
             plugin_dir_url(__FILE__) . 'assets/js/sp-popup.js',
             array(),
             '1.0',
             true
         );
+
+        $css_path = plugin_dir_path(__FILE__) . 'assets/sp-style.css';
+        $css_url  = plugin_dir_url(__FILE__) . 'assets/sp-style.css';
+        $ver      = file_exists( $css_path ) ? filemtime( $css_path ) : false;
+
         wp_enqueue_style(
-            'sp-showcase-style',
-            plugin_dir_url(__FILE__) . 'assets/sp-style.css',
-            [],
-            filemtime(plugin_dir_path(__FILE__) . 'assets/sp-style.css')
+            'grvthps-showcase-style',
+            $css_url,
+            array(),
+            $ver
         );
     }
 }
-add_action( 'wp_enqueue_scripts', 'sp_enqueue_frontend_scripts' );
+add_action( 'wp_enqueue_scripts', 'grvthps_enqueue_frontend_scripts' );
+
 
 
 
 // Add rewrite rule
-function sp_add_preview_rewrite() {
+// Register rewrite endpoint for portfolio preview
+function grvthps_register_preview_rewrite() {
     add_rewrite_rule(
-        '^portfolio-preview/?$',
-        'index.php?sp_portfolio_preview=1',
+        '^portfolio-preview/?',
+        'index.php?grvthps_preview=1',
         'top'
     );
 }
-add_action( 'init', 'sp_add_preview_rewrite' );
+add_action('init', 'grvthps_register_preview_rewrite');
 
-function sp_add_query_var( $vars ) {
-    $vars[] = 'sp_portfolio_preview';
+// Whitelist query vars
+function grvthps_add_query_vars( $vars ) {
+    $vars[] = 'grvthps_preview';
+    $vars[] = 'grvthps_project_id';
     return $vars;
 }
-add_filter( 'query_vars', 'sp_add_query_var' );
+add_filter('query_vars', 'grvthps_add_query_vars');
 
-function sp_template_redirect() {
-    if ( get_query_var( 'sp_portfolio_preview' ) ) {
-        include plugin_dir_path( __FILE__ ) . 'templates/portfolio-preview.php';
-        exit;
+// Load our custom template
+function grvthps_preview_template( $template ) {
+    if ( get_query_var('grvthps_preview') ) {
+        return plugin_dir_path(__FILE__) . '/templates/portfolio-preview.php';
+    }
+    return $template;
+}
+add_filter('template_include', 'grvthps_preview_template');
+
+
+
+
+
+add_action( 'wp_enqueue_scripts', 'grvthps_maybe_enqueue_preview_style' );
+function grvthps_maybe_enqueue_preview_style() {
+    if ( get_query_var( 'grvthps_portfolio_preview' ) ) {
+        $path = plugin_dir_path( __FILE__ ) . 'assets/sp-style.css';
+        $url  = plugin_dir_url( __FILE__ ) . 'assets/sp-style.css';
+        $ver  = file_exists( $path ) ? filemtime( $path ) : false;
+        wp_enqueue_style( 'grvthps-preview-style', $url, array(), $ver );
     }
 }
-add_action( 'template_redirect', 'sp_template_redirect' );
-

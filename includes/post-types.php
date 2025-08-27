@@ -1,6 +1,10 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly
+}
+
 // Register Portfolio Custom Post Type
-function sp_register_portfolio_post_type() {
+function grvthps_register_portfolio_post_type() {
     $labels = array(
         'name' => 'Project Showcase',
         'singular_name' => 'Project',
@@ -23,6 +27,6 @@ function sp_register_portfolio_post_type() {
         'rewrite' => array( 'slug' => 'portfolio' ),
     );
 
-    register_post_type( 'sp_portfolio', $args );
+    register_post_type( 'grvthps_portfolio', $args );
 }
-add_action( 'init', 'sp_register_portfolio_post_type' );
+add_action( 'init', 'grvthps_register_portfolio_post_type' );
